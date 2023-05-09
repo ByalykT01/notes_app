@@ -1,16 +1,16 @@
 const fs = require('fs')
 const chalk = require('chalk')
 
-const getNotes = function(){
+const getNotes = () => {
   return 'your notes.'
 }
 
 // Function that adds notes
 
-const addNote = function(title, body){
+const addNote = (title, body) => {
   const notes = loadNotes()
 
-  const duplicateNotes = notes.filter(function (note){
+  const duplicateNotes = notes.filter((note) => {
     return note.title === title
   })
   if (duplicateNotes.length == 0) {
@@ -28,10 +28,10 @@ const addNote = function(title, body){
 
 //Function that removes notes
 
-const removeNote = function(title){
+const removeNote = (title) => {
   const notes = loadNotes()
   
-  const notesToKeep = notes.filter(function (note){
+  const notesToKeep = notes.filter( (note) => {
     return note.title !== title
   })
   
@@ -45,12 +45,24 @@ const removeNote = function(title){
 
 }
 
-const saveNotes = function(notes){
+//Function that list notes
+
+const listNotes = () => {
+  console.log(chalk.italic.inverse('Your notes \n'))
+  const notes = loadNotes()
+
+  notes.forEach((note) => {
+    console.log(chalk.bold(note.title))
+    console.log(note.body + '\n')
+  });
+}
+
+const saveNotes = (notes) => {
   const dataJSON = JSON.stringify(notes)
   fs.writeFileSync('notes.json', dataJSON)
 }
 
-const loadNotes = function(){
+const loadNotes = () => {
   try {
     const dataBuffer = fs.readFileSync('notes.json')
     const dataJSON = dataBuffer.toString()
@@ -64,5 +76,6 @@ const loadNotes = function(){
 module.exports = {
   getNotes: getNotes,
   addNote: addNote,
-  removeNote: removeNote
+  removeNote: removeNote,
+  listNotes: listNotes
 }
