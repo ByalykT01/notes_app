@@ -61,7 +61,7 @@ const readNote = (title) => {
     console.log(chalk.bold.inverse(note.title) + '\n' + note.body)
   }
   else{
-    console.log('There is no note with that title')
+    console.log(chalk.bgRed('There is no note with that title'))
   }
 }
 
